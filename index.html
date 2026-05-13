@@ -461,8 +461,6 @@ function makeDragItemEl(itemId, sourceKey) {
     draggingId = itemId;
     draggingFrom = sourceKey;
     setTimeout(() => el.classList.add('dragging'), 0);
-    const _qa = document.getElementById('questionArea');
-    window.scrollTo(0, Math.max(0, _qa.getBoundingClientRect().top + window.scrollY - 8));
   });
   el.addEventListener('dragend', () => el.classList.remove('dragging'));
 
@@ -551,10 +549,6 @@ function touchStart(e) {
   ghost.style.width = r.width + 'px';
   ghost.style.height = r.height + 'px';
   movGhost(e.touches[0]);
-  // 立即捲動到題目區（不用動畫，避免與拖曳衝突）
-  const qa = document.getElementById('questionArea');
-  const qaTop = qa.getBoundingClientRect().top + window.scrollY - 8;
-  window.scrollTo(0, Math.max(0, qaTop));
   e.preventDefault();
 }
 

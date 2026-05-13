@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -461,6 +461,7 @@ function makeDragItemEl(itemId, sourceKey) {
     draggingId = itemId;
     draggingFrom = sourceKey;
     setTimeout(() => el.classList.add('dragging'), 0);
+    document.getElementById('questionArea').scrollIntoView({behavior:'smooth', block:'start'});
   });
   el.addEventListener('dragend', () => el.classList.remove('dragging'));
 
@@ -549,12 +550,17 @@ function touchStart(e) {
   ghost.style.width = r.width + 'px';
   ghost.style.height = r.height + 'px';
   movGhost(e.touches[0]);
+  document.getElementById('questionArea').scrollIntoView({behavior:'smooth', block:'start'});
   e.preventDefault();
 }
 
 function touchMove(e) {
   if (!ghost.style.display || ghost.style.display === 'none') return;
   movGhost(e.touches[0]);
+  // Auto-scroll when dragging near top or bottom edge
+  const y = e.touches[0].clientY;
+  if (y < 130) window.scrollBy(0, -8);
+  else if (y > window.innerHeight - 100) window.scrollBy(0, 8);
   e.preventDefault();
 }
 
